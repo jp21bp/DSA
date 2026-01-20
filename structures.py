@@ -157,7 +157,6 @@ class LinkedList:
             print(f"Value {value} is not in linked list")
             return
         prev.next = current.next
-        del current # Memory mgmt
 
     def delete_all(self, value) -> None:
         ## Deletes all nodes with "value"
@@ -190,22 +189,244 @@ class LinkedList:
 
 
 ### Experimenting with Linked List
-llist = LinkedList()
-llist.delete_first(5)
-llist.append(1)
-llist.append(2)
-llist.prepend(3)
-llist.delete_first(1)
-llist.delete_first(3)
-llist.append(3)
-llist.append(3)
-llist.append(1)
-llist.prepend(3)
-llist.prepend(3)
-llist.delete_all(3)
-llist.delete_first(1)
-llist.delete_first(2)
-print(llist)
+# llist = LinkedList()
+# llist.delete_first(5)
+# llist.append(1)
+# llist.append(2)
+# llist.prepend(3)
+# llist.delete_first(1)
+# llist.delete_first(3)
+# llist.append(3)
+# llist.append(3)
+# llist.append(1)
+# llist.prepend(3)
+# llist.prepend(3)
+# llist.delete_all(3)
+# llist.delete_first(1)
+# llist.delete_first(2)
+# print(llist)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### Doubly linked lists
+#### Create double nodes
+class DoubleNode:
+    def __init__(self, data) -> None:
+        self.data: int = data
+        self.next: DoubleNode = None
+        self.prev: DoubleNode = None
+
+    def __str__(self) -> str:
+        next = f"({self.next.data})" if self.next else "None"
+        prev = f"({self.prev.data})" if self.prev else "None"
+        return f"{prev} <- ({self.data}) -> {next}"
+        
+
+### Trying out DoubleNode
+# dnode = DoubleNode(5)
+# print(dnode)
+
+
+
+#### Creating Double Linked List
+class DoubleLinkedList:
+    def __init__(self) -> None:
+        self.head: DoubleNode = None
+        self.tail: DoubleNode = None
+
+    def __str__(self) -> str:
+        result = "Head -> "
+        current = self.head
+        if not current:
+            result += "None <- Tail"
+            return result
+        while current:
+            result += f"({current.data}) "
+            current = current.next
+            if current: result += "<-> " 
+        result += "<- Tail"
+        return result
+    
+    def print_nodes(self) -> str:
+        # Iterates through all nodes and prints each node
+            # Ensures that links are correct
+        current = self.head
+        i = 0
+        result = ""
+        if not current:
+            return "No nodes exist"
+        while current:  #Current is DoubleNode
+            result += f"Node {i}: "
+            result += str(current)
+            result += '\n'
+            current = current.next
+            i += 1
+        return result
+
+    def prepend(self, data) -> None:
+        ## Add new DoubleNode at beginning of list
+        new_node = DoubleNode(data)
+        if not self.head:
+            self.head = self.tail = new_node
+        else:
+            self.head.prev = new_node
+            new_node.next = self.head
+            self.head = new_node
+
+    def append(self, data) -> None:
+        ## Add new DOubleNode at end of list
+        new_node = DoubleNode(data)
+        if not self.tail:
+            self.tail = self.head = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+
+    def delete_first(self, value) -> None:
+        ## Delete first instance of "value"
+        current = self.head
+        if current and current.data == value:
+            current.next.prev = None
+            self.head = current.next
+            return
+        while current and current.data != value:    #Traverse
+            current = current.next
+        if not current:
+            # Reaches end of traversal
+                #I.e., all nodes have been checked and dismissed
+            print(f"Value {value} not found in list")
+            return
+        current.prev.next = current.next
+        if current.next: current.next.prev = current.prev
+            # Node eliminated is in middle of list
+        else: self.tail = current.prev
+            # Node eliminated is one the LAST node of traversal
+                # We need to change the head of linked list
+                # Traversal wasn't quite complete
+            # We already have case for when traversal was complete
+                # I.e., for when all node have been checked and dismissed
+
+    def delete_last(self, value) -> None:
+        ## Deletes the last instance of "value"
+        current = self.tail
+        if current and current.data == value:
+            current.prev.next = None
+            self.tail = current.prev
+            return
+        while current and current.data != value:     #Traverse
+            current = current.prev
+        if not current:
+            # Reaches end of traversal
+                #I.e., all nodes have been checked and dismissed
+            print(f"Value {value} not found in list")
+            return
+        current.next.prev = current.prev
+        if current.prev: current.prev.next = current.next
+            # Node eliminated is in middle of list
+        else: self.head = current.next
+            # Node eliminated is one the LAST node of traversal
+                # We need to change the head of linked list
+                # Traversal wasn't quite complete
+            # We already have case for when traversal was complete
+                # I.e., for when all node have been checked and dismissed
+
+    def delete_all(self, value) -> None:
+        ## Deletes all nodes with "Value"
+        ## Will be done with forward traversal
+            # But can also be done with backward traversal
+        if not self.head: return    #Empty lsit
+        while self.head.data == value:
+            # Handles the case of head node being target
+            self.head.next.prev = None
+            self.head = self.head.next
+        current = self.head.next
+            # Since we already ensured that head node isn't target
+        while current:
+            # Only breaks AFTER the tail node has been checked
+            if current.data == value:
+                current.prev.next = current.next
+                if current.next: current.next.prev = current.prev
+                    #Eliminated node is in middle of list
+                else: self.tail = current.prev
+                    # Eliminated node is the LAST node in traversal
+            current = current.next
+        
+
+#### Experimenting with Double Linked List
+# dll = DoubleLinkedList()
+# dll.prepend(5)
+# dll.append(6)
+# dll.prepend(3)
+# dll.append(8)
+# dll.append(6)
+# dll.append(1)
+# dll.prepend(2)
+# dll.append(7)
+# print(dll)
+# dll.delete_first(3)
+# print(dll)
+# dll.delete_first(7)
+# print(dll)
+# dll.delete_last(5)
+# print(dll)
+# dll.delete_last(2)
+# print(dll)
+# dll.delete_all(1)
+# print(dll)
+# dll.delete_all(6)
+# print(dll)
+# # print(dll.print_nodes())
+# print(f"Head node: {dll.head}")
+# print(f"Tail node: {dll.tail}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
