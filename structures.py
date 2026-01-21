@@ -434,6 +434,112 @@ class DoubleLinkedList:
 
 
 
+##### Queues
+    # Queues are like regular lines at the groceries
+    # In order to ensure faireness (not being skipped), you
+            # only need to keep track of the person in front of you
+    # Thus this implies a single linked list
+        # Linked: bc the order of arrival matters
+        # Single: you don't need to keep track of the person behind you
+            # But we can make it double to speed up operations
+                # Tradeoff: memory and speed
+    # However, if there is a dispute, you will need to keep track 
+            # of the first and last peron on the line
+        # The first person verifies they're next in line
+        # The last person can verify the second to last person, etc
+    # It also helps if you keep track of the size of the line
+        # To allocate more resources, if necessary
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedListQueue:
+    def __init__(self):
+        self.head: Node = None
+        self.tail: Node = None
+        self.size = 0
+
+    def enqueue(self, item):
+        # Adds items to the end of the queue
+        new_node = Node(item)
+        if not self.tail:
+            self.head = self.tail = new_node
+        else:
+            new_node.next = self.tail
+            self.tail = new_node
+        self.size += 1
+
+    def dequeue(self):
+        # Take care of the first node in line
+        if not self.head: return None 
+            #Line if empty
+        data = self.head.data
+        if self.head == self.tail:
+            # THere is only ONE node in list
+            self.head = self.tail = None
+            return data
+        current = self.tail
+        prev = None
+        while current != self.head:
+            # Iterate to see who's next in line
+            prev = current
+            current = current.next
+        self.head = prev
+        self.size -= 1
+        return data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
