@@ -525,6 +525,19 @@ class LinkedListQueue:
 
 
 
+##### Creating Stack DS
+class Stack:
+    def __init__(self): self.items = []
+    def is_empty(self): return self.items == []
+    def push(self, item): self.items.append(item)
+    def pop(self): return "empty" if self.is_empty() else self.items.pop()
+    def peek(self): return "empty" if self.is_empty() else self.items[-1]
+    def size(self): return len(self.items)
+
+
+
+
+
 
 
 
