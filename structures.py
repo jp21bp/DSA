@@ -556,7 +556,51 @@ class Stack:
 
 
 
+##### Hash tables
+class HashTable:
+    def __init__(self, size: int = 10):
+        self.size = size
+        self.table = [[] for _ in range(self.size)]
 
+    def __str__(self):
+        items = []
+        for i, bucket in enumerate(self.table):
+            if bucket: items.append(f"Bucket {i}: {bucket}")
+        return "\n".join(items)
+    
+    def _hash(self, key) -> int:
+        # Hash function
+        return hash(key) % self.size
+            # "hash()" = built-in hash fcn
+
+    def insert(self, key, value):
+        # insert/update key-value pair
+        index = self._hash(key)
+        bucket = self.table[index]
+        for i, (record_key, record_value) in enumerate(bucket):
+            # This for-loop only runs is "bucket" is NOT EMPTY
+            if record_key == key:
+                # CHecks for COLLISION case
+                bucket[i] = (key, value)    # UPDATE key,value pair
+                return
+        bucket.append((key, value))
+
+    def get(self, key):
+        # REtrieve value by key
+        index = self._hash(key)
+        bucket = self.table[index]
+        for record_key, record_value in bucket:
+            if record_key == key: return record_value
+        raise KeyError("key not found")
+    
+    def delete(self, key):
+        index = self._hash(key)
+        bucket = self.table[index]
+        for i, (record_key, record_value) in enumerate(bucket):
+            if record_key == key: 
+                bucket.pop(i)
+                return
+        raise KeyError("key not found")
 
 
 
