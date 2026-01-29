@@ -757,6 +757,21 @@ def selection_sort(arr):
 
 
 
+##### Merge sort
+def merge(leftArr, rightArr):
+    result = []
+    i = 0; j = 0
+    while i < len(leftArr) and j < len(rightArr):
+        if leftArr[i] < rightArr[j]:
+            result.append(leftArr[i])
+            i += 1
+        else: 
+            result.append(rightArr[i])
+            j += 1
+    result.extend(leftArr[i:])
+    result.extend(rightArr[j:])
+    return result
+
 
 
 
