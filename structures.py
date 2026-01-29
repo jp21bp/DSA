@@ -772,7 +772,35 @@ def merge(leftArr, rightArr):
     result.extend(rightArr[j:])
     return result
 
+def merge_sort(arr):
+    if len(arr) <= 1: return arr
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+    sorted_left = merge_sort(left_half)
+    sorted_right = merge_sort(right_half)
+    return merge(sorted_left, sorted_right)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###### Quick sort
 
 
 
