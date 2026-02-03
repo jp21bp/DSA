@@ -812,7 +812,15 @@ def partition(arr, low_idx, high_idx):
     arr[i+1], arr[high_idx] = arr[high_idx], arr[i+1]
     return i+1
 
-
+def quick_sort(arr):
+    if len(arr) <= 1: return arr    # Base case
+    pivot = arr[-1]
+    smaller, equal, larger = [], [], []
+    for num in arr:
+        if num < pivot: smaller.append(num)
+        elif num == pivot: equal.append(num)
+        else: larger.append(num)
+    return quick_sort(smaller) + equal + quick_sort(larger)
 
 
 
