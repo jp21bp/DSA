@@ -801,6 +801,19 @@ def merge_sort(arr):
 
 
 ###### Quick sort
+def partition(arr, low_idx, high_idx):
+    pivot = arr[high_idx]
+        #Using high end approach
+    i = low_idx - 1
+    for j in range(low_idx, high_idx):
+        if arr[j] <= pivot: 
+            i += 1
+            arr[i], arr[j] = arr[i], arr[j]
+    arr[i+1], arr[high_idx] = arr[high_idx], arr[i+1]
+    return i+1
+
+
+
 
 
 
