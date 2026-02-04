@@ -848,6 +848,35 @@ def quick_sort(arr):
 
 
 
+def radix_sort(arr):
+    max_num = max(arr); exp = 1
+    while max_num // exp > 0:
+        n = len(arr)
+        output = [0] * n
+        count = [0] * 10    # Counts for digits 0-9
+            # Depends on the BASE of the numbers being analyzed
+                # Ex: base 16 => digits 0 - F => [0] * 16
+        for num in arr:
+            index = (num // exp) % 10
+                # Module depends on base of number
+            count[index] += 1
+        for i in range(1,10):
+            count[i] += count[i-1]
+        for i in range(n-1, -1, -1):
+            #Build output array
+                #Done in reverse to maintain stability
+            index = (arr[i] // exp) % 10
+            output[count[index] - 1] = arr[i]
+            count[index] -= 1
+        for i in range(n):
+            arr[i] = output[i]
+        exp *= 10   #Depends on base of number
+    return arr
+
+
+
+
+
 
 
 
