@@ -896,6 +896,20 @@ def radix_sort(arr):
 
 
 
+def counting_sort(arr, order: []):
+    n = len(arr); count = {}; output = [0] * n
+    for item in order: count[item] = 0  #Initialize dict
+    for item in arr: count[item] += 1   #Fill in frquencies
+    for i in range(1,len(order)):   #Freq -> counts
+        count[order[i]] += count[order[i-1]]
+    for i in range(n-1, -1, -1):
+        index = count[arr[i]] - 1
+        output[index] = arr[i]
+        count[arr[i]] -+ 1
+    return output
+
+
+
 
 
 
