@@ -1030,6 +1030,190 @@ def binary_search_iter(arr, target):
 
 
 
+##### Trees
+#### Binary Trees
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+from collections import deque
+class BinTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, root, value):
+        if root is None: return Node(value)
+        queue = deque([root])
+        while queue:
+            temp = queue.popleft()
+            if temp.left is None: 
+                temp.left = Node(value)
+                return root
+            else: queue.append(temp.left)
+            if temp.right is None: 
+                temp.right = Node(value)
+                return root
+            else: queue.append(temp.right)
+        return root
+    
+    def delete(self, root, value):
+        if root is None: return None
+        queue = deque([root])
+        target = None
+        while queue:
+            curr = queue.popleft()
+            if curr.data == value:
+                target = curr
+                break
+            if curr.left: queue.append(curr.left)
+            if curr.right: queue.append(curr.right)
+        if target is None: return root
+        last_node = last_parent = None
+        queue = deque([root, None])
+            # Setup to find deepest, rightmost node and its parent
+        while queue:
+            curr, parent = queue.popleft()
+            last_node = curr; last_parent = parent
+            if curr.left: queue.append((curr.left, curr))
+            if curr.right: queue.append((curr.right, curr))
+        target.data = last_node.data
+        if last_parent:
+            if last_parent.left == last_node:
+                last_parent.left = None #Eliminate last left parent
+            else: last_parent.right = None
+        else: return None
+        return root
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
