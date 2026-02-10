@@ -1121,6 +1121,26 @@ class BinTree:
 
 
 
+#### Binary Search Trees
+class Node:
+    def __init__(self, data):
+        self.value = data
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+    
+    def insert(self, root, value):
+        if root is None: return Node(value)
+        if root.value == value: return root
+            # No duplicates allowed
+        if root.value < value: root.right = self.insert(root.right, value)
+        else: root.left = self.insert(root.left, value)
+        return root
+    
+
 
 
 
