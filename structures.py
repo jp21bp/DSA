@@ -1140,6 +1140,29 @@ class BST:
         else: root.left = self.insert(root.left, value)
         return root
     
+    def search(self, root, value):
+        if root is None or root.value == value:
+            return root #Base Case
+        if root.value < value: return self.search(root.right, value)
+        return self.search(root.left, value)
+    
+    def get_replacement(self, curr_node):
+        curr = curr_node.right
+        while curr is not None and curr.left is not None:
+            curr = curr.left
+        return curr
+    
+    def del_node(self, root, x):
+        if root is None: return root
+        if root.value > x: root.left = self.del_node(root.left, x)
+        elif root.value < x: root.right = self.def_node(root.right, x)
+        else:
+            if root.left is None: return root.right
+            if root.right is None: return root.left
+            replacement = self.get_replacement(root)
+            root.value = replacement.value
+            root.right = self.del_node(root.right, replacement.key)
+        return root
 
 
 
