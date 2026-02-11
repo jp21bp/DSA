@@ -1163,6 +1163,79 @@ class BST:
             root.value = replacement.value
             root.right = self.del_node(root.right, replacement.key)
         return root
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### AVL trees
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.height = 1
+    
+class AVLTrees:
+    def __init__(self):
+        self.root = None
+
+    def height(self, node):
+        if not node: return 0
+        return node.height
+    
+    def balance(self, node):
+        if not node: return 0
+        return self.height(node.left) - self.height(node.right)
+    
+    def left_rotate(self, node):
+        right_node = node.right
+        temp = right_node.left
+        right_node.left = node
+        node.right = temp
+        node.height = 1 + max(self.height(node.left), self.height(node.right))
+        right_node.height = 1 + max(self.height(right_node.left), self.height(right_node.right))
+        return right_node 
+
+    def right_rotate(self, node):
+        left_node = node.left
+        temp = left_node.right
+        left_node.right = node
+        node.left = temp
+        node.height = 1 + max(self.height(node.left), self.height(node.right))
+        left_node.height = 1 + max(self.height(left_node.left), self.height(left_node.right))
+        return left_node
+    
+    def min_value_node(self, root):
+        curr = root
+        while curr.left: curr = curr.left
+        return curr
+    
+
 
 
 
