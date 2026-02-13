@@ -1235,9 +1235,61 @@ class AVLTrees:
         while curr.left: curr = curr.left
         return curr
     
-
-
-
+    def insert(self, root, value):
+        if not root: return Node(value)
+        elif value < root.value: root.left = self.insert(root.left, value)
+        else: root.right = self.insert(root.right, value)
+        root.height = 1 + max(self.height(root.left), self.height(root.right))
+        balance = self.balance(root)
+        ##Rotation cases
+        if balance > 1 and value < root.left.value: #Right rotate
+            return self.right_rotate(root)
+        if balance < -1 and value > root.right.value:   # left rotate
+            return self.left_rotate(root)
+        if balance > 1 and value > root.left.value: #left-right rotate
+            root.left = self.left_rotate(root.left)
+            return self.right_rotate(root)
+        if balance < -1 and value < root.right.value:   #right-left rotate
+            root.right = self.right_rotate(root.right)
+            return self.left_rotate(root)
+        return root
+    
+    def delete(self, root, value):
+        if not root: return root
+        if value < root.value: root.left = self.delete(root.left, value)
+        elif value > root.value: root.right = self.delete(root.right, value)
+        else:
+            if not root.left:
+                temp = root.right
+                root = None
+                return temp
+            elif not root.right:
+                temp = root.left
+                root = None
+                return temp
+            temp = self.min_value_node(root.right)
+            root.value = temp.value
+            root.right = self.delete(root.right, temp.value)
+        if not root: return root
+        root.hieght = 1 + max(self.height(root.left), self.height(root.right))
+        balance = self.balance(root)
+        ##Rotation cases
+        if balance > 1 and value < root.left.value: #Right rotate
+            return self.right_rotate(root)
+        if balance < -1 and value > root.right.value:   # left rotate
+            return self.left_rotate(root)
+        if balance > 1 and value > root.left.value: #left-right rotate
+            root.left = self.left_rotate(root.left)
+            return self.right_rotate(root)
+        if balance < -1 and value < root.right.value:   #right-left rotate
+            root.right = self.right_rotate(root.right)
+            return self.left_rotate(root)
+        return root
+    
+    def search(self, root, value):
+        if not root or root.value == value: return root
+        if root.value < value: return self.search(root.right, value)
+        return self.search(root.left, value)
 
 
 
