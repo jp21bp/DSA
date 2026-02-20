@@ -1290,6 +1290,49 @@ class AVLTrees:
         if not root or root.value == value: return root
         if root.value < value: return self.search(root.right, value)
         return self.search(root.left, value)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Max heaps
+class MaxHeap:
+    def __init__(self, arr = []):
+        self.arr=arr
+        self.num_nodes = len(arr)
+
+    def parent(self, index): return (index - 1)//2
+
+    def left_child(self, index): return 2*index + 1
+
+    def right_child(self, index): return 2 * index + 2
+
+    def is_leaf(self, index): return index >= (self.num_nodes//2)
 
 
 
