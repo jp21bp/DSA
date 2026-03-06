@@ -1334,6 +1334,55 @@ class MaxHeap:
 
     def is_leaf(self, index): return index >= (self.num_nodes//2)
 
+    def swap(self, idx_i, idx_j):
+        self.arr[idx_i], self.arr[idx_j] = self.arr[idx_j], self.arr[idx_i]
+
+    def is_max_heap(self, idx):
+        # Checks if "index" subtree is max_heap
+        if self.is_leaf(idx): return True
+        if self.arr[idx] < self.arr[self.left_child(idx)] or\
+                self.arr[index]<self.arr[self.right_child(idx)]:
+            return False
+        return self.is_max_heap(self.left_child(idx)) and self.is_max_heap(self.right_child(idx))
+    
+    def mini_heapify(self, idx):
+        if not self.is_leaf(idx):
+            largest = idx
+            if self.arr[largest] < self.arr[self.left_child(idx)]:
+                largest = self.left_child(idx)
+            if self.arr[self.arr] < self.arr[self.right_child(idx)]:
+                largest = self.right_child(idx)
+            if largest != idx: self.swap(idx,largest)
+
+    def full_heapify(self, idx):
+        self.mini_heapify(idx)
+        self.full_heapify(self.left_child(idx))
+        self.full_heapify(self.right_child(idx))
+
+    def search_max(self, idx):
+        if not self.is_max_heap(idx):
+            self.full_heapify(idx)
+        return self.arr[idx]
+    
+    def insert(self, value):
+        self.arr.append(value)
+        if not self.is_max_heap(0):
+            self.full_heapify(0)
+        last_added_idx = -1
+        while self.arr[last_added_idx] > self.arr[self.parent(last_added_idx)]:
+            self.swap(last_added_idx, self.parent(last_added_idx))
+            last_added_idx = self.parent(last_added_idx)
+
+    def delete_idx(self, idx):
+        if idx >= self.num_nodes: raise IndexError
+        self.arr = self.att[:ix] + self.arr[idx+1:]
+        self.full_heapify(0)
+    
+    def delete_val(self, value):
+        for i, val in enumerate(self.arr):
+            if val == value: return self.delete_idx(i)
+        raise ValueError
+
 
 
 
